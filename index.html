@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gabriel cumple 5 · Aventura en el fondo del mar</title>
+<meta name="description" content="Domingo 20 de diciembre, de 3:00 a 6:00 p. m. Salón social de Avenida Park. ¡Confirma tu asistencia!">
+<meta property="og:title" content="¡Gabriel cumple 5! 🐠">
+<meta property="og:description" content="Una aventura en el fondo del mar. Domingo 20 de diciembre, 3:00 p. m. Toca para ver la invitación.">
+<meta property="og:image" content="https://ml2khhw.github.io/cumple-gabriel/portada-og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b4f8a">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐠</text></svg>">
+<link rel="preload" as="image" href="img/hero.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep:#062a55; --sea:#0b4f8a; --aqua:#2bb7e6;
+    --orange:#ff8a1f; --gold:#ffcf3f;
+    --ink:#0d2340; --glass:rgba(255,255,255,.82);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  html,body{overflow-x:clip}
+  body{font-family:"Fredoka",system-ui,sans-serif;color:var(--ink);background:var(--deep);
+    background-image:linear-gradient(180deg,#0d6fb3 0%,#0b4f8a 35%,#062a55 75%,#041d3d 100%);min-height:100vh}
+
+  #bubbles{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+  .bubble{position:absolute;bottom:-40px;border-radius:50%;
+    background:radial-gradient(circle at 30% 28%,rgba(255,255,255,.95) 0 10%,rgba(255,255,255,.25) 30%,rgba(160,230,255,.10) 65%,rgba(255,255,255,.35) 100%);
+    box-shadow:inset 0 0 6px rgba(255,255,255,.6);opacity:.7;animation:rise linear forwards}
+  @keyframes rise{0%{transform:translate(0,0)}25%{transform:translate(12px,-25vh)}50%{transform:translate(-10px,-55vh)}75%{transform:translate(10px,-85vh)}100%{transform:translate(0,-120vh);opacity:.1}}
+
+  .wrap{max-width:560px;margin:0 auto;position:relative}
+
+  .glossy{font-family:"Baloo 2";font-weight:800;color:var(--orange);
+    background:linear-gradient(180deg,#ffd27a 0%,#ffa23a 38%,#ff7a12 62%,#e85300 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 3px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 8px 14px rgba(0,30,70,.45))}
+
+  .hero{position:relative;min-height:100svh;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center;
+    background:#0d6fb3 url(img/hero.jpg) center bottom/cover no-repeat}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(180deg,transparent,#0d6fb3)}
+  .hero .top{position:relative;z-index:2;padding:calc(env(safe-area-inset-top) + 34px) 16px 0}
+  .kicker{font-family:"Baloo 2";font-weight:700;color:#fff;font-size:clamp(19px,5.4vw,24px);text-shadow:0 2px 10px rgba(0,40,90,.55)}
+  .name{font-size:clamp(76px,23vw,132px);line-height:.95;margin-top:2px;animation:bob 3.4s ease-in-out infinite}
+  .hero .age{position:absolute;z-index:2;left:50%;bottom:31%;transform:translateX(-50%);font-family:"Baloo 2";font-weight:800;color:#fff;font-size:20px;
+    background:linear-gradient(180deg,#ff8fae,#ff5c86);border:3px solid #fff;border-radius:30px;padding:2px 18px;box-shadow:0 6px 16px rgba(0,0,0,.25);white-space:nowrap}
+  .scroll-hint{position:absolute;z-index:2;bottom:22px;left:50%;transform:translateX(-50%);color:#fff;font-weight:600;font-size:15px;text-decoration:none;text-shadow:0 2px 8px rgba(0,0,0,.5);display:flex;flex-direction:column;align-items:center}
+  .scroll-hint span{font-size:26px;line-height:1;animation:down 1.6s ease-in-out infinite}
+  @keyframes down{50%{transform:translateY(7px)}}
+  @keyframes bob{50%{transform:translateY(-7px)}}
+
+  section.block{padding:26px 16px 6px}
+  .card{position:relative;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    border:2px solid rgba(255,255,255,.9);border-radius:30px;overflow:hidden;text-align:center;
+    box-shadow:0 18px 40px rgba(0,20,60,.35),inset 0 1px 0 #fff;
+    opacity:0;transform:translateY(36px) scale(.97);transition:opacity .8s ease,transform .8s cubic-bezier(.2,1.25,.4,1)}
+  .card.in{opacity:1;transform:none}
+  .card .art{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#0b4f8a}
+  .card .body{padding:20px 20px 24px}
+  .label{display:inline-block;font-family:"Baloo 2";font-weight:800;font-size:14px;letter-spacing:1.6px;text-transform:uppercase;color:#7a3b00;
+    background:linear-gradient(180deg,#ffe58a,#ffc62e);border:2px solid #fff;border-radius:16px;padding:3px 14px;margin-bottom:10px;box-shadow:0 4px 10px rgba(255,170,0,.35)}
+  .card h2{font-size:clamp(30px,8.4vw,38px);line-height:1.02;margin-bottom:8px}
+  .card p{font-size:18px;line-height:1.45;color:#16365e}
+  .card p.sub{font-size:21px;font-weight:600;color:var(--sea)}
+
+  .countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+  .countdown div{background:linear-gradient(180deg,#ffffff,#d8f4ff);border:2px solid #fff;border-radius:20px;padding:12px 2px 8px;box-shadow:0 6px 14px rgba(0,60,120,.18)}
+  .countdown b{display:block;font-family:"Baloo 2";font-weight:800;font-size:clamp(30px,8.6vw,38px);line-height:1;color:var(--sea)}
+  .countdown span{font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:#3a6a96}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:"Baloo 2";font-weight:800;font-size:19px;color:#fff;
+    background:linear-gradient(180deg,#ffb04a 0%,#ff7a12 55%,#f05a00 100%);border:3px solid #fff;border-radius:999px;padding:10px 24px;margin-top:16px;
+    box-shadow:0 8px 18px rgba(240,90,0,.4),inset 0 2px 0 rgba(255,255,255,.55);text-decoration:none;cursor:pointer;min-height:54px;text-shadow:0 1px 2px rgba(120,40,0,.45);transition:transform .12s}
+  .btn:active{transform:scale(.97)}
+  .btn.blue{background:linear-gradient(180deg,#7fe0ff 0%,#2bb7e6 55%,#1690c8 100%);box-shadow:0 8px 18px rgba(20,140,200,.4),inset 0 2px 0 rgba(255,255,255,.55);text-shadow:0 1px 2px rgba(0,60,100,.45)}
+  .btn.green{background:linear-gradient(180deg,#8ff0a8 0%,#33cc6e 55%,#1fa357 100%);box-shadow:0 8px 18px rgba(30,160,90,.4),inset 0 2px 0 rgba(255,255,255,.55);text-shadow:0 1px 2px rgba(0,80,40,.45)}
+  .btn.full{width:100%}
+
+  .deep{position:relative;min-height:92svh;margin-top:30px;background:#05152f url(img/linterna-vertical.jpg) center/cover no-repeat;display:flex;align-items:flex-start;justify-content:center;text-align:center;overflow:hidden}
+  .deep::before{content:"";position:absolute;inset:0 0 auto 0;height:80px;background:linear-gradient(180deg,#0b4f8a,transparent)}
+  .deep .txt{position:relative;padding:70px 22px 0;max-width:520px;opacity:0;transform:translateY(30px);transition:opacity 1s ease,transform 1s ease}
+  .deep .txt.in{opacity:1;transform:none}
+  .deep h2{font-size:clamp(34px,9.5vw,46px);line-height:1.02}
+  .deep p{color:#fff;font-size:19px;line-height:1.45;margin-top:12px;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+
+  .bring{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+  .bring div{flex:1 1 0;min-width:92px;background:linear-gradient(180deg,#fff,#e2f7ff);border:2px solid #fff;border-radius:20px;padding:12px 6px;font-weight:600;font-size:15px;line-height:1.2;box-shadow:0 6px 14px rgba(0,60,120,.15)}
+  .bring i{display:block;font-style:normal;font-size:34px;margin-bottom:4px}
+
+  form{text-align:left;margin-top:8px}
+  form label{display:block;font-weight:600;font-size:17px;margin:14px 0 6px;color:var(--ink)}
+  form input{width:100%;font:inherit;font-size:18px;padding:13px 16px;border:2px solid #9fd8f3;border-radius:18px;background:#fff;color:var(--ink);box-shadow:inset 0 2px 4px rgba(0,60,120,.08)}
+  form input:focus{outline:3px solid var(--gold);outline-offset:1px;border-color:#fff}
+  .counter{display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(180deg,#fff,#e2f7ff);border:2px solid #fff;border-radius:20px;padding:8px 10px;box-shadow:0 6px 14px rgba(0,60,120,.14)}
+  .counter + .counter{margin-top:10px}
+  .counter .who{font-weight:600;font-size:18px;display:flex;align-items:center;gap:8px}
+  .counter .who i{font-style:normal;font-size:26px}
+  .counter .ctrl{display:flex;align-items:center;gap:10px}
+  .counter button{width:46px;height:46px;border-radius:50%;border:2px solid #fff;background:linear-gradient(180deg,#ffe58a,#ffbe1a);font:800 24px "Baloo 2";color:#7a3b00;cursor:pointer;line-height:1;box-shadow:0 4px 10px rgba(255,170,0,.4)}
+  .counter output{min-width:30px;text-align:center;font:800 28px "Baloo 2";color:var(--sea)}
+  .err{color:#c1121f;font-weight:600;font-size:15px;min-height:20px;margin-top:8px;text-align:center}
+  .card p.fine{font-size:14px;text-align:center;margin-top:10px;opacity:.75}
+
+  .seabed{position:relative;margin-top:30px;width:100%;height:clamp(280px,62vw,440px);background:url(img/fondo.jpg) center bottom/cover no-repeat}
+  .seabed::before{content:"";position:absolute;inset:0 0 auto 0;height:45%;background:linear-gradient(180deg,#062a55,transparent)}
+  footer{position:absolute;left:0;right:0;top:10%;text-align:center;color:#fff;padding:0 16px}
+  footer .glossy{font-size:clamp(34px,10vw,48px);line-height:1}
+  footer small{display:block;font-weight:500;font-size:16px;margin-top:8px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+
+  #intro{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;
+    padding:calc(env(safe-area-inset-top) + 16vh) 20px calc(36px + env(safe-area-inset-bottom));background:#062a55 url(img/linterna-vertical.jpg) center/cover no-repeat;transition:opacity .9s ease,visibility .9s}
+  #intro::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,30,60,.35) 0%,rgba(4,30,60,0) 45%)}
+  #intro > *{position:relative}
+  #intro .msg{display:flex;flex-direction:column;align-items:center;gap:14px}
+  #intro.gone{opacity:0;visibility:hidden}
+  #intro .env{font-size:19px;color:#fff;font-weight:500;max-width:24ch;text-shadow:0 2px 10px rgba(0,0,0,.7)}
+  #intro h1{font-size:clamp(44px,13vw,60px);line-height:1}
+  #intro .btn{font-size:22px;padding:14px 32px;animation:pulse 1.8s ease-in-out infinite}
+  @keyframes pulse{50%{transform:scale(1.06)}}
+
+  #music{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:40;width:54px;height:54px;border-radius:50%;
+    border:3px solid #fff;background:linear-gradient(180deg,#ffe58a,#ffbe1a);box-shadow:0 6px 16px rgba(0,0,0,.3);font-size:24px;cursor:pointer;display:none}
+  #music.show{display:block}
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .card,.deep .txt{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div id="bubbles"></div>
+
+<div id="intro" role="dialog" aria-label="Invitación">
+  <div class="msg">
+    <p class="env">El pez linterna te trae una invitación desde el fondo del mar…</p>
+    <h1 class="glossy">¡Gabriel cumple 5!</h1>
+  </div>
+  <button class="btn" id="open">Toca para abrir 🫧</button>
+</div>
+
+<button id="music" aria-label="Música">🔊</button>
+
+<header class="hero">
+  <div class="top">
+    <p class="kicker">Ven a celebrar el cumpleaños de</p>
+    <div class="name glossy">Gabriel</div>
+  </div>
+  <div class="age">¡cumple 5 años!</div>
+  <a class="scroll-hint" href="#cuando">Desliza<span>⌄</span></a>
+</header>
+
+<div class="wrap">
+  <section class="block" id="cuando">
+    <div class="card">
+      <img class="art" src="img/tortuga.jpg" alt="Una tortuga marina con gorro de fiesta y globos" loading="lazy">
+      <div class="body">
+        <span class="label">¿Cuándo?</span>
+        <h2 class="glossy">Domingo 20<br>de diciembre</h2>
+        <p class="sub">De 3:00 a 6:00 de la tarde</p>
+        <a class="btn blue" id="cal" target="_blank" rel="noopener">📅 Guardar en mi calendario</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="card">
+      <div class="body">
+        <span class="label">Faltan</span>
+        <div class="countdown">
+          <div><b id="d">–</b><span>días</span></div>
+          <div><b id="h">–</b><span>horas</span></div>
+          <div><b id="m">–</b><span>min</span></div>
+          <div><b id="s">–</b><span>seg</span></div>
+        </div>
+        <p style="margin-top:12px">¡Sigue nadando, que ya casi llegamos!</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="deep" aria-label="El pez linterna">
+  <div class="txt">
+    <h2 class="glossy">¡Hasta el pez linterna viene a la fiesta!</h2>
+    <p>Él nos va a iluminar el camino hasta el lugar de la celebración.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="block">
+    <div class="card">
+      <img class="art" src="img/linterna.jpg" alt="El pez linterna ilumina un camino de conchas hacia la fiesta" loading="lazy">
+      <div class="body">
+        <span class="label">¿Dónde?</span>
+        <h2 class="glossy">Salón social<br>de Avenida Park</h2>
+        <p>Calle 19 # 42-96, Castropol<br>El Poblado, Medellín</p>
+        <a class="btn green" href="https://maps.google.com/?cid=12014019181271454193" target="_blank" rel="noopener">📍 ¿Cómo llegar?</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="card">
+      <div class="body">
+        <span class="label">Tu equipo de aventura</span>
+        <h2 class="glossy">Solo trae…</h2>
+        <div class="bring">
+          <div><i>😄</i>Muchas ganas de jugar</div>
+          <div><i>🎈</i>Energía para los juegos</div>
+          <div><i>📸</i>Tu mejor sonrisa</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="confirmar">
+    <div class="card">
+      <img class="art" src="img/torta.jpg" alt="Torta de cumpleaños con vela de número 5 en el fondo del mar" loading="lazy">
+      <div class="body">
+        <span class="label">Confirma tu asistencia</span>
+        <h2 class="glossy">¿Vienes a la aventura?</h2>
+        <p>Cuéntanos cuántos vienen para que nadie se quede sin su ponqué.</p>
+        <form id="rsvp" novalidate>
+          <label for="nombre">Nombre de la familia o del invitado</label>
+          <input id="nombre" name="nombre" autocomplete="name" placeholder="Ej.: Familia Pérez" required>
+          <label>¿Cuántos vienen?</label>
+          <div class="counter" data-k="adultos"><span class="who"><i>🧑</i>Adultos</span><span class="ctrl"><button type="button" data-d="-1" aria-label="Menos adultos">−</button><output>1</output><button type="button" data-d="1" aria-label="Más adultos">+</button></span></div>
+          <div class="counter" data-k="ninos"><span class="who"><i>🧒</i>Niños</span><span class="ctrl"><button type="button" data-d="-1" aria-label="Menos niños">−</button><output>1</output><button type="button" data-d="1" aria-label="Más niños">+</button></span></div>
+          <p class="err" id="err" role="alert"></p>
+          <button class="btn full" type="submit">🐠 Confirmar por WhatsApp</button>
+          <p class="fine">Se abre WhatsApp con el mensaje listo para Diana, la mamá de Gabriel. Solo tienes que enviarlo.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="seabed">
+  <footer><div class="glossy">¡Te esperamos!</div><small>Con cariño, Diana, Walter y Gabriel</small></footer>
+</div>
+
+<script>
+(function(){
+  const PARTY = new Date("2026-12-20T15:00:00-05:00");
+  const PHONE = "573007395251";
+
+  const layer = document.getElementById("bubbles");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function bubble(){
+    const b = document.createElement("div");
+    const s = 5 + Math.random()*20;
+    b.className = "bubble";
+    b.style.width = b.style.height = s + "px";
+    b.style.left = Math.random()*100 + "vw";
+    b.style.animationDuration = (7 + Math.random()*8) + "s";
+    layer.appendChild(b);
+    b.addEventListener("animationend", () => b.remove());
+  }
+  if(!reduce){ for(let i=0;i<8;i++) setTimeout(bubble, i*300); setInterval(bubble, 750); }
+
+  const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.12});
+  document.querySelectorAll(".card,.deep .txt").forEach(c => io.observe(c));
+
+  const pad = n => String(n).padStart(2,"0");
+  function tick(){
+    let t = Math.max(0, PARTY - new Date());
+    const d = Math.floor(t/864e5); t -= d*864e5;
+    const h = Math.floor(t/36e5); t -= h*36e5;
+    const m = Math.floor(t/6e4); t -= m*6e4;
+    const s = Math.floor(t/1e3);
+    document.getElementById("d").textContent = d;
+    document.getElementById("h").textContent = pad(h);
+    document.getElementById("m").textContent = pad(m);
+    document.getElementById("s").textContent = pad(s);
+  }
+  tick(); setInterval(tick, 1000);
+
+  const cal = new URL("https://calendar.google.com/calendar/render");
+  cal.searchParams.set("action","TEMPLATE");
+  cal.searchParams.set("text","Cumpleaños de Gabriel 🐠");
+  cal.searchParams.set("dates","20261220T200000Z/20261220T230000Z");
+  cal.searchParams.set("location","Salón social Avenida Park, Calle 19 # 42-96, El Poblado, Medellín");
+  cal.searchParams.set("details","¡Gabriel cumple 5! Aventura en el fondo del mar. De 3:00 a 6:00 p. m.");
+  document.getElementById("cal").href = cal.toString();
+
+  // Melodía original hecha en el navegador
+  let ctx, playing = false, timer;
+  const notes = [72,76,79,76,74,77,81,77,72,76,79,84,83,79,76,74, 72,76,79,76,77,81,84,81,79,76,74,77,76,72,74,72];
+  function blip(midi, t, dur){
+    const f = 440*Math.pow(2,(midi-69)/12);
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = "sine"; o.frequency.setValueAtTime(f, t);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.15, t+0.02); g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+    o.connect(g).connect(ctx.destination); o.start(t); o.stop(t+dur+0.05);
+  }
+  function bass(midi, t){
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = "triangle"; o.frequency.value = 440*Math.pow(2,(midi-69)/12);
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.11,t+0.03); g.gain.exponentialRampToValueAtTime(0.0001,t+0.5);
+    o.connect(g).connect(ctx.destination); o.start(t); o.stop(t+0.6);
+  }
+  function loop(){
+    const step = 0.28, t0 = ctx.currentTime + 0.05;
+    notes.forEach((n,i) => blip(n, t0+i*step, 0.32));
+    [48,53,55,48, 48,53,55,48].forEach((n,i) => bass(n, t0+i*step*4));
+    timer = setTimeout(loop, notes.length*step*1000);
+  }
+  const mbtn = document.getElementById("music");
+  function start(){ try{ ctx = ctx || new (window.AudioContext||window.webkitAudioContext)(); ctx.resume(); playing = true; mbtn.textContent = "🔊"; loop(); }catch(e){} }
+  function stop(){ playing = false; clearTimeout(timer); mbtn.textContent = "🔇"; try{ ctx.suspend(); }catch(e){} }
+  mbtn.addEventListener("click", () => { if(playing){ stop(); } else { start(); } });
+
+  document.getElementById("open").addEventListener("click", () => {
+    document.getElementById("intro").classList.add("gone");
+    mbtn.classList.add("show"); start();
+    for(let i=0;i<18;i++) setTimeout(bubble, i*60);
+  });
+
+  const vals = {adultos:1, ninos:1};
+  document.querySelectorAll(".counter").forEach(c => {
+    const k = c.dataset.k, out = c.querySelector("output");
+    c.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+      vals[k] = Math.max(0, Math.min(20, vals[k] + Number(b.dataset.d)));
+      out.textContent = vals[k];
+    }));
+  });
+  document.getElementById("rsvp").addEventListener("submit", e => {
+    e.preventDefault();
+    const nombre = document.getElementById("nombre").value.trim();
+    const err = document.getElementById("err");
+    if(!nombre){ err.textContent = "Escribe tu nombre, porfa 🐠"; document.getElementById("nombre").focus(); return; }
+    if(vals.adultos + vals.ninos === 0){ err.textContent = "Cuéntanos cuántas personas vienen."; return; }
+    err.textContent = "";
+    const total = vals.adultos + vals.ninos;
+    const msg = "¡Hola, Diana! Confirmo asistencia al cumpleaños de Gabriel (domingo 20 de diciembre).\n\n" +
+      "Nombre: " + nombre + "\nAdultos: " + vals.adultos + "\nNiños: " + vals.ninos + "\n\n" +
+      "En total vamos " + total + (total === 1 ? " persona" : " personas") + ". ¡Nos vemos en el fondo del mar!";
+    window.location.href = "https://api.whatsapp.com/send?phone=" + PHONE + "&text=" + encodeURIComponent(msg);
+  });
+})();
+</script>
+</body>
+</html>
